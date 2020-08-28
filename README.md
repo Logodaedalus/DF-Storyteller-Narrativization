@@ -34,5 +34,6 @@ switch(historicalEvent.type) {
       eventDesc += `Unknown Event: ${historicalEvent.type}`;
       break;
 ```
-8. Commit after making sure it doesn't break stuff
-9. Mark the spreadsheet green because you did it, thanks!
+8. If you are adding a new file, make sure you add it to the "pattern libraries" section at the top of index.html!
+9. Commit after making sure it doesn't break stuff
+10. Mark the spreadsheet green because you did it, thanks!
