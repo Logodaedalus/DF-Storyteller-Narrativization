@@ -37,3 +37,9 @@ switch(historicalEvent.type) {
 8. If you are adding a new file, make sure you add it to the "pattern libraries" section at the top of `index.html`!
 9. Commit after making sure it doesn't break stuff
 10. Mark the spreadsheet green because you did it, thanks!
+
+# Requested Style
+
+* Event descriptions should be relatively self-contained, and shouldn't rely heavily (if at all) on other events.
+* The idea is to first put in a one-event baseline, then build up with more elaborate story scaffolds after that's established.
+* For example: "Thorkron was strangled by Beedle the goblin" is what we're doing now. Later (soon?) we'll do scaffolds so we can do "Beedle the goblin strangled Thorkon, finally getting revenge for his poor murdered brother."
