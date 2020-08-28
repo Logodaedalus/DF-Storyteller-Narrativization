@@ -11,7 +11,7 @@ Collection of JS files for use with [DF Storyteller](https://dfstoryteller.com/)
 1. Check out the [Progress Spreadsheet](https://docs.google.com/spreadsheets/d/1zibCyKqFcGRJJAd8bNuZajhuvU5_9NBSVnEu0V_6JDU/edit?usp=sharing)
 2. Pick an event type / event types you wanna do
 3. Put your name in the "Who's Working On It?" column
-4. If it's not one of the already-made files, make a new file (either grouped by theme somehow, or put your initials and a number, like jg-1.js)
+4. If it's not one of the already-made files, make a new file (either grouped by theme somehow, or put your initials and a number, like `jg-1.js`)
 5. Write your description! If you have general utility functions (name formatting, etc) add them to `description-utils.js` so everyone can find them!
 6. Function example:
 ```
@@ -34,6 +34,6 @@ switch(historicalEvent.type) {
       eventDesc += `Unknown Event: ${historicalEvent.type}`;
       break;
 ```
-8. If you are adding a new file, make sure you add it to the "pattern libraries" section at the top of index.html!
+8. If you are adding a new file, make sure you add it to the "pattern libraries" section at the top of `index.html`!
 9. Commit after making sure it doesn't break stuff
 10. Mark the spreadsheet green because you did it, thanks!
