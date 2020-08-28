@@ -4,7 +4,7 @@ Collection of JS files for use with [DF Storyteller](https://dfstoryteller.com/)
 # How To See
 1. Download [DF Storyteller](https://dfstoryteller.com/)
 2. Download this repo (I assume all files are in a folder named "DF-Storyteller-Narrativization", and stick it in DF Storyteller's "serve-paintings" folder
-3. Follow all the instructions for DF Storyteller to get the server started (import a legends file, etc etc)
+3. Follow all [the instructions for DF Storyteller](https://guide.dfstoryteller.com/) to get the server started (import a legends file, etc etc)
 4. Point yer browser to http://127.0.0.1:20350/paintings/DF-StoryTeller-Narrativization
 
 # How To Make
