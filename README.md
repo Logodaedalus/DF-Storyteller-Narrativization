@@ -19,7 +19,7 @@ Collection of JS files for use with [DF Storyteller](https://dfstoryteller.com/)
 async function hf_attacked_site_desc(length) {
   var site = await load_ref_data(`sites/${he.site_id}`);           //this is how you load data for the event's site (he.site_id)
   site.name = formatName(site.name)                             //this is how you call a formatter (in description-utils.js)
-  eventDesc = `Some jerk attacked ${site.name}.";
+  eventDesc = `Some jerk attacked ${site.name}.`;
   return eventDesc;
 }
 ```
