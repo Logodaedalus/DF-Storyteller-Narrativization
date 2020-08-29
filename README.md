@@ -4,7 +4,8 @@ Collection of JS files for use with [DF Storyteller](https://dfstoryteller.com/)
 # How To See
 1. Download [DF Storyteller](https://dfstoryteller.com/)
 2. Download this repo (I assume all files are in a folder named "DF-Storyteller-Narrativization", and stick it in DF Storyteller's "serve-paintings" folder
-3. Follow all [the instructions for DF Storyteller](https://guide.dfstoryteller.com/) to get the server started (import a legends file, etc etc)
+3. Generate a Legends file using DFHack (or unzip the one I put in the repo and use that one)
+3. Follow all [the instructions for DF Storyteller](https://guide.dfstoryteller.com/) to get the server started (processing legends file, etc)
 4. Point yer browser to http://127.0.0.1:20350/paintings/DF-StoryTeller-Narrativization
 
 # How To Make
@@ -18,7 +19,7 @@ Collection of JS files for use with [DF Storyteller](https://dfstoryteller.com/)
 async function hf_attacked_site_desc(length) {
   var site = await load_ref_data(`sites/${he.site_id}`);           //this is how you load data for the event's site (he.site_id)
   site.name = formatName(site.name)                             //this is how you call a formatter (in description-utils.js)
-  eventDesc = `Some jerk attacked ${site.name}.";
+  eventDesc = `Some jerk attacked ${site.name}.`;
   return eventDesc;
 }
 ```
