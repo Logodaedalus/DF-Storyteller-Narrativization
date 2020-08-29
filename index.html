@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>DF Storyteller Event Description Demo</title>
+    <!--<script src="DF-Storyteller-Narrativization/chartjs/Chart.min.js"></script>-->
+    <!--<script src="Tutorial/scripts/hfEvents.js"></script>-->
+    <script src="DF-Storyteller-Narrativization/scripts/descriptions/description-utils.js"></script>
+
+    <!--pattern libraries===========================-->
+    <script src="DF-Storyteller-Narrativization/scripts/descriptions/library/jg-1.js"></script>
+    <!--put new libraries here-->
+    <!--============================================-->
+    <script src="DF-Storyteller-Narrativization/scripts/display.js"></script>
+    <script src="DF-Storyteller-Narrativization/scripts/descriptions/descriptions-main.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="DF-Storyteller-Narrativization/style.css">
+</head>
+
+<body>
+
+    <script>
+        window.onload = function () {
+            var base_url = "http://localhost:20350";
+            load_table("he", `${base_url}/api/historical_events?per_page=20`);
+        }
+        
+    </script>
+
+    <!-- Tab links -->
+<div class="tab">
+  <button class="tablinks" onclick="openTab(event, 'all-events-container')">Events</button>
+  <button class="tablinks" onclick="openTab(event, 'character-container')">Characters</button>
+  <button class="tablinks" onclick="openTab(event, 'collections-container')">Collections</button>
+</div>
+
+<!-- Tab content -->
+<div id="all-events-container" class="tabcontent">
+  
+    <h3>All Events</h3>
+    <p>
+        <button id="he_table_first">First page &lt;&lt;</button>
+        <button id="he_table_prev">Previous page &lt;</button>
+        <span id="he_page_nr">0</span>
+        <button id="he_table_next">Next page &gt;</button>
+        <button id="he_table_last">Last page &gt;&gt;</button>
+    </p>
+    <table id="he_table">
+    </table>
+
+     <!--Event Info -->
+    <div style="width: 500px;">
+        <h3>Event JSON</h3>
+        <pre id="he_jsonDiv"></pre>
+    </div>
+
+</div>
+
+<div id="character-container" class="tabcontent">
+  
+  <h3>All Events</h3>
+    <p>
+        <button id="hf_table_first">First page &lt;&lt;</button>
+        <button id="hf_table_prev">Previous page &lt;</button>
+        <span id="hf_page_nr">0</span>
+        <button id="hf_table_next">Next page &gt;</button>
+        <button id="hf_table_last">Last page &gt;&gt;</button>
+    </p>
+    <table id="hf_table">
+    </table>
+
+     <!--Event Info -->
+    <div style="width: 500px;">
+        <h3>Historical Figure JSON</h3>
+        <pre id="hf_jsonDiv"></pre>
+    </div>
+
+</div>
+
+<div id="collections-container" class="tabcontent">
+  
+  <h3>Event Collections</h3>
+
+
+</div>
+
+
+</body>
+
+</html>
