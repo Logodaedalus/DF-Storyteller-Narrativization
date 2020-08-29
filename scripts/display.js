@@ -47,9 +47,9 @@ async function add_data_to_table(prefix, data){
             table.innerHTML = 
                 `<tr>
                     <th>id</th>
-                    <th>date</th>
-                    <th>type</th>
-                    <th>event</th>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Description</th>
                 </tr>`;
 
             // Add a row for each event

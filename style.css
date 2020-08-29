@@ -1,6 +1,29 @@
+html {
+  font-family: Arial, sans serif;
+}
+
 table, th, td {
     border: 1px solid black;
 }
+
+table {
+  border-spacing: 0px;
+  border-collapse: collapse;
+}
+
+td, th {
+  padding:10px;
+}
+
+th {
+  background-color: #484747;
+  color: white;
+}
+
+td {
+  font-size:14px;
+}
+
 pre {
     border: 1px solid black; 
     background: #2b2a2a; 
