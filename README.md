@@ -8,7 +8,7 @@ Collection of JS files for use with [DF Storyteller](https://dfstoryteller.com/)
 3. Follow all [the instructions for DF Storyteller](https://guide.dfstoryteller.com/) to get the server started (processing legends file, etc)
 4. Point yer browser to http://127.0.0.1:20350/paintings/DF-StoryTeller-Narrativization
 
-# How To Make
+# How To Make (For Contributors)
 1. Check out the [Progress Spreadsheet](https://docs.google.com/spreadsheets/d/1zibCyKqFcGRJJAd8bNuZajhuvU5_9NBSVnEu0V_6JDU/edit?usp=sharing)
 2. Pick an event type / event types you wanna do
 3. Put your name in the "Who's Working On It?" column
