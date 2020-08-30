@@ -61,6 +61,18 @@ async function change_hf_state_desc(he) {
 	return eventDesc;
 }
 //---------------------------------------------------------------
+//It appears this event type doesn't contain the "relationship" field necessary to figure out what the hell is going on??
+//But hf_relationship_denied does???
+async function hf_relationship_desc(he) {
+
+    var source_hf = await load_ref_data(`historical_figures/${he.source_hf_id}`);     //load historical figure data
+    source_hf.name = formatName(source_hf.name);
+    var target_hf = await load_ref_data(`historical_figures/${he.target_hf_id}`);
+    target_hf.name = formatName(target_hf.name);
+
+    return `${source_hf.name} formed some kind of relationship with ${target_hf.name}`;
+}
+//---------------------------------------------------------------
 //TODO: get name of where they died...is subregion_id the same as a region id???
 async function hf_died_desc(he) {
 
@@ -132,16 +144,16 @@ async function hf_died_desc(he) {
                 eventDesc = `${hf.name} was scared to death by  ${slayer.name}`;
                 break;
             default:
-                console.error("unhandled death type: " + he.death_cause);
+                console.error("unhandled death type: " + he.death_cause + " for " + he.id);
                 eventDesc = `${hf.name} was slain by ${slayer.name}.`;
                 break;
         }
 
         if (he.SlayerItemID >= 0) {
-            eventDesc += " using a (" + SlayerItemID + ")";         //TODO: how do we get the item name???
+            eventDesc += " using a (" + he.SlayerItemID + ")";         //TODO: how do we get the item name???
         }
         else if (he.SlayerShooterItemID >= 0) {
-            eventDesc += " with a shot from a (" + SlayerShooterItemID + ")";
+            eventDesc += " with a shot from a (" + he.SlayerShooterItemID + ")";
         }
         else {
             eventDesc += ".";
@@ -208,7 +220,7 @@ async function hf_died_desc(he) {
                 eventDesc = `${hf.name} was scuttled`;
                 break;
             default:
-                console.error("unhandled death type: " + he.death_cause);
+                console.error("unhandled death type: " + he.death_cause + " for " + he.id);
                 eventDesc = `${hf.name} died of some unknown cause`;
                 break;
         }

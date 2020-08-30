@@ -32,6 +32,7 @@
 <div class="tab">
   <button class="tablinks" onclick="openTab(event, 'all-events-container')">Events</button>
   <button class="tablinks" onclick="openTab(event, 'character-container')">Characters</button>
+  <button class="tablinks" onclick="openTab(event, 'type-tester-container'); populateTypeDropdown();">Type Tester</button>
 </div>
 
 <!--========== Windows ===========-->
@@ -46,14 +47,7 @@
         <button id="he_table_next">Next page &gt;</button>
         <button id="he_table_last">Last page &gt;&gt;</button>
     </div>
-    <div class="dropdown">
-      <button onclick="document.getElementById('myDropdown').classList.toggle('show')" class="dropbtn">Filter By Type</button>
-      <div id="myDropdown" class="dropdown-content">
-        <a href="#">Link 1</a>
-        <a href="#">Link 2</a>
-        <a href="#">Link 3</a>
-      </div>
-    </div>
+    
     <table id="he_table">
     </table>
 
@@ -82,6 +76,31 @@
     <div id="character-moreInfo">
 
     </div>
+    <br style="clear:both"/>
+</div>
+
+<!-- Type Tester Window ----------------------->
+<div id="type-tester-container" class="tabcontent">
+    <div id="tt-header">
+        <span>Events of Type: </span>
+        <div class="dropdown">
+          <button onclick="document.getElementById('ttDropdown').classList.toggle('show')" class="dropbtn">Select Type</button>
+          <div id="ttDropdown" class="dropdown-content"></div>
+        </div>
+    </div>
+    <div class="pager">
+        <button id="tt_table_first">First page &lt;&lt;</button>
+        <button id="tt_table_prev">Previous page &lt;</button>
+        <span id="tt_page_nr">0</span>
+        <button id="tt_table_next">Next page &gt;</button>
+        <button id="tt_table_last">Last page &gt;&gt;</button>
+    </div>
+    
+    <table id="tt_table">
+    </table>
+
+     <!--Event Info -->
+    <div id="tt_jsonDiv"></div>
     <br style="clear:both"/>
 </div>
 

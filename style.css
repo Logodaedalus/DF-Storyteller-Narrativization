@@ -82,7 +82,7 @@ pre {
 /* DROPDOWN BUTTON STYLES----------*/
 /* Dropdown Button */
 .dropbtn {
-  background-color: #3498DB;
+  background-color: #82571b;
   color: white;
   padding: 10px;
   font-size: 16px;
@@ -92,7 +92,7 @@ pre {
 
 /* Dropdown button on hover & focus */
 .dropbtn:hover, .dropbtn:focus {
-  background-color: #2980B9;
+  background-color: #503611;
 }
 
 /* The container <div> - needed to position the dropdown content */
@@ -114,13 +114,14 @@ pre {
 /* Links inside the dropdown */
 .dropdown-content a {
   color: black;
-  padding: 12px 16px;
+  padding: 5px 16px;
   text-decoration: none;
   display: block;
+  font-size: 15px;
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #ddd}
+.dropdown-content a:hover {background-color: #c5be77}
 
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {display:block;}
@@ -140,4 +141,14 @@ pre {
 
 tr.highlighted {
   background-color:#e8d4a9;
+}
+
+/* TYPE TESTER STYLES------------------------ */
+
+#tt-header {
+  margin-bottom:20px;
+}
+
+#tt-header span {
+  font-weight:bold;
 }

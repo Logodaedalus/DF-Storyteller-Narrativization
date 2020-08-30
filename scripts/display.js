@@ -92,6 +92,7 @@ async function add_data_to_table(prefix, data){
                 </tr>`;
 
             var rowCounter = 0;
+
             // Add a row for each event
             data.forEach(
                 async hf => {
@@ -124,6 +125,32 @@ async function add_data_to_table(prefix, data){
                         actionsCell.appendChild(eventLink);
                         
                     //statsCell.onclick = function(){showHfStats(hf, prefix);};
+                },
+            );
+        break;
+        case "tt":
+            // Reset table to default content
+            table.innerHTML = 
+                `<tr>
+                    <th>id</th>
+                    <th>Description</th>
+                </tr>`;
+
+            // Add a row for each event
+            data.forEach(
+                async he => {
+
+                    // Add a new item to the table at the end.
+                    // Create a new row in the table
+                    var row = table.insertRow(-1);
+                    // Fill all the cells in the row.
+                    // The `-1` means that it will insert it at the end of the row
+                    var clickCell = row.insertCell(-1);
+                    //clickCell.innerHTML = `<a href="javascript:showJson(${he})">${he.id}</a>`;
+                    clickCell.innerHTML = `<a class='pseudoLink'>${he.id}</a>`;
+                    clickCell.onclick = function(){showJson(he, prefix + "_jsonDiv");};
+                    var chronicleCell = row.insertCell(-1);
+                    chronicleCell.innerHTML = await historical_event_desc(he);
                 },
             );
         break;
@@ -164,9 +191,8 @@ function openTab(evt, tabName) {
     break;
     }
 }
-//===============================
+//==========================================================
 //Historical Figure functions
-//===============================
 
 //highlights the row after unhighlighting other rows
 function highlightRow(tableId, rowId) {
@@ -179,15 +205,14 @@ function highlightRow(tableId, rowId) {
     var row = document.getElementById(rowId);
     row.className = "highlighted";
 }
-
+//-----------------------------------------------------
 //shows the stats of the hf
 function showStats(hf) {
 
 }
+//-----------------------------------------------------
 //shows the events for the hf
 async function showHfEvents(hf, rowId) {
-
-
 
     var infoDiv = document.getElementById("character-moreInfo");
     infoDiv.innerHTML =
@@ -231,8 +256,153 @@ function showStats(data) {
 
 }
 
-//==================================================================
 
+function populateTypeDropdown() {
+
+    var types = [
+        'add_hf_entity_honor',
+        'add_hf_entity_link',
+        'add_hf_hf_link',
+        'add_hf_site_link',
+        'agreement_formed',
+        'agreement_made',
+        'agreement_rejected',
+        'artifact_claim_formed',
+        'artifact_copied',
+        'artifact_created',
+        'artifact_destroyed',
+        'artifact_found',
+        'artifact_given',
+        'artifact_lost',
+        'artifact_possessed',
+        'artifact_recovered',
+        'artifact_stored',
+        'assume_identity',
+        'attacked_site',
+        'body_abused',
+        'building_profile_acquired',
+        'ceremony',
+        'change_hf_body_state',
+        'change_hf_job',
+        'change_hf_state',
+        'changed_creature_type',
+        'competition',
+        'create_entity_position',
+        'created_site',
+        'created_structure',
+        'created_world_construction',
+        'creature_devoured',
+        'dance_form_created',
+        'destroyed_site',
+        'entity_alliance_formed',
+        'entity_breach_feature_layer',
+        'entity_created',
+        'entity_dissolved',
+        'entity_equipment_purchase',
+        'entity_incorporated',
+        'entity_law',
+        'entity_overthrown',
+        'entity_persecuted',
+        'entity_primary_criminals',
+        'entity_rampaged_in_site',
+        'entity_relocate',
+        'entity_searched_site',
+        'failed_frame_attempt',
+        'failed_intrigue_corruption',
+        'field_battle',
+        'first_contact',
+        'gamble',
+        'hf_abducted',
+        'hf_attacked_site',
+        'hf_confronted',
+        'hf_convicted',
+        'hf_destroyed_site',
+        'hf_died',
+        'hf_disturbed_structure',
+        'hf_does_interaction',
+        'hf_enslaved',
+        'hf_equipment_purchase',
+        'hf_gains_secret_goal',
+        'hf_interrogated',
+        'hf_learns_secret',
+        'hf_new_pet',
+        'hf_performed_horrible_experiments',
+        'hf_prayed_inside_structure',
+        'hf_preach',
+        'hf_profaned_structure',
+        'hf_ransomed',
+        'hf_recruited_unit_type_for_entity',
+        'hf_relationship',
+        'hf_relationship_denied',
+        'hf_reunion',
+        'hf_revived',
+        'hf_simple_battle_event',
+        'hf_travel',
+        'hf_viewed_artifact',
+        'hf_wounded',
+        'hfs_formed_intrigue_relationship',
+        'hfs_formed_reputation_relationship',
+        'holy_city_declaration',
+        'item_stolen',
+        'knowledge_discovered',
+        'masterpiece_arch_constructed',
+        'masterpiece_arch_design',
+        'masterpiece_created_arch_construct',
+        'masterpiece_created_engraving',
+        'masterpiece_created_item',
+        'masterpiece_created_item_improvement',
+        'masterpiece_food',
+        'masterpiece_item',
+        'masterpiece_item_improvement',
+        'masterpiece_lost',
+        'merchant',
+        'modified_building',
+        'musical_form_created',
+        'new_site_leader',
+        'peace_accepted',
+        'peace_rejected',
+        'performance',
+        'plundered_site',
+        'poetic_form_created',
+        'procession',
+        'razed_structure',
+        'reclaim_site',
+        'regionpop_incorporated_into_entity',
+        'remove_hf_entity_link',
+        'remove_hf_hf_link',
+        'remove_hf_site_link',
+        'replaced_structure',
+        'sabotage',
+        'site_died',
+        'site_dispute',
+        'site_retired',
+        'site_taken_over',
+        'site_tribute_forced',
+        'sneak_into_site',
+        'spotted_leaving_site',
+        'squad_vs_squad',
+        'tactical_situation',
+        'trade',
+        'written_content_composed',
+    ];
+
+    var ttDropdown = document.getElementById("ttDropdown");
+
+    types.forEach(
+        type => {
+        var statsLink = document.createElement('a');
+            statsLink.classList = "pseudoLink";
+            statsLink.innerHTML = type;
+            statsLink.onclick = function() { 
+                load_table("tt", `${base_url}/api/historical_events?filter_on_type=${type}`); 
+            }
+        ttDropdown.appendChild(statsLink);
+    });
+        
+    
+}
+
+//==========================================================
 // Close the dropdown menu if the user clicks outside of it (runs on page-load)
 window.onclick = function(event) {
   if (!event.target.matches('.dropbtn')) {
