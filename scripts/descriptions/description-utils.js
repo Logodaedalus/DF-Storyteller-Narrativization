@@ -48,3 +48,33 @@ function formatTime(historicalEvent) {
 	}
 
 }
+//---------------------------------------------------------------
+//
+function getPronouns(caste) {
+//They went to their doctor themself to see if it was theirs
+  switch (caste) {
+    case "male":
+        return {
+            they: "he",
+            their: "his",
+            theirs: "his",
+            themself: "himself"
+        };
+        break;
+    case "female":
+        return {
+            they: "she",
+            their: "her",
+            theirs: "hers",
+            themself: "herself"
+        };
+        break;
+    default:
+        return {
+            they: "they",
+            their: "their",
+            theirs: "theirs",
+            themself: "themself"
+        };
+  }
+}

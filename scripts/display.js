@@ -4,38 +4,42 @@ async function load_table(prefix, link){
     var data = fetch(link)
         .then(response => response.json())
         .then(data => {
-            add_data_to_table(prefix, data.data);
-            // Set info on next and prev buttons
-            // Got all the html DOM elements
-            var first_link = document.getElementById(`${prefix}_table_first`);
-            var prev_link = document.getElementById(`${prefix}_table_prev`);
-            var next_link = document.getElementById(`${prefix}_table_next`);
-            var last_link = document.getElementById(`${prefix}_table_last`);
-
-            // Disable the button if there is no link in the response
-            first_link.disabled = data.links.first == null;
-            // Set the link to the value we got in the response
-            // The `onclick` function will run if someone clicks the button.
-            // It will then run `load_table` with the `data.links.first` URL that is in there
-            // For example: `load_table("http://localhost:8000/api/...")`
-            first_link.onclick = function(){load_table(prefix, data.links.first)};
-            // Same for the other buttons
-            prev_link.disabled = data.links.prev == null;
-            prev_link.onclick = function(){load_table(prefix, data.links.prev)};
-
-            next_link.disabled = data.links.next == null;
-            next_link.onclick = function(){load_table(prefix, data.links.next)};
-            last_link.disabled = data.links.last == null;
-            last_link.onclick = function(){load_table(prefix, data.links.last)};
-
-            // Display the current page number
-            var page_nr = document.getElementById(`${prefix}_page_nr`);
-            // `innerHTML` will refer to everything inside the tag: 
-            // `<span id="page_nr">  everything in here  </span>`
-            page_nr.innerHTML = data.page_nr;
+            add_data_to_table(prefix, data.data);           //add table values in
+            setPager(prefix, data);
         });
 }
+//---------------------------------------------------------------
+//sets up the pager on a table
+function setPager(prefix, data) {
+    // Set info on next and prev buttons
+    // Got all the html DOM elements
+    var first_link = document.getElementById(`${prefix}_table_first`);
+    var prev_link = document.getElementById(`${prefix}_table_prev`);
+    var next_link = document.getElementById(`${prefix}_table_next`);
+    var last_link = document.getElementById(`${prefix}_table_last`);
 
+    // Disable the button if there is no link in the response
+    first_link.disabled = data.links.first == null;
+    // Set the link to the value we got in the response
+    // The `onclick` function will run if someone clicks the button.
+    // It will then run `load_table` with the `data.links.first` URL that is in there
+    // For example: `load_table("http://localhost:8000/api/...")`
+    first_link.onclick = function(){load_table(prefix, data.links.first)};
+    // Same for the other buttons
+    prev_link.disabled = data.links.prev == null;
+    prev_link.onclick = function(){load_table(prefix, data.links.prev)};
+
+    next_link.disabled = data.links.next == null;
+    next_link.onclick = function(){load_table(prefix, data.links.next)};
+    last_link.disabled = data.links.last == null;
+    last_link.onclick = function(){load_table(prefix, data.links.last)};
+
+    // Display the current page number
+    var page_nr = document.getElementById(`${prefix}_page_nr`);
+    // `innerHTML` will refer to everything inside the tag: 
+    // `<span id="page_nr">  everything in here  </span>`
+    page_nr.innerHTML = data.page_nr;
+}
 //---------------------------------------------------------------
 async function add_data_to_table(prefix, data){
 
@@ -64,8 +68,8 @@ async function add_data_to_table(prefix, data){
                     // The `-1` means that it will insert it at the end of the row
                     var clickCell = row.insertCell(-1);
                     //clickCell.innerHTML = `<a href="javascript:showJson(${he})">${he.id}</a>`;
-                    clickCell.innerHTML = `<a href="#">${he.id}</a>`;
-                    clickCell.onclick = function(){showJson(he, prefix);};
+                    clickCell.innerHTML = `<a class='pseudoLink'>${he.id}</a>`;
+                    clickCell.onclick = function(){showJson(he, prefix + "_jsonDiv");};
                     row.insertCell(-1).innerHTML = he.displayTime;
                     row.insertCell(-1).innerHTML = he.type;
                     var chronicleCell = row.insertCell(-1);
@@ -77,16 +81,62 @@ async function add_data_to_table(prefix, data){
                 },
             );
         break;
+        case "hf":
+            // Reset table to default content
+            table.innerHTML = 
+                `<tr>
+                    <th>id</th>
+                    <th>Name</th>
+                    <th>Race</th>
+                    <th>Actions</th>
+                </tr>`;
+
+            var rowCounter = 0;
+            // Add a row for each event
+            data.forEach(
+                async hf => {
+
+                    // Add a new item to the table at the end.
+                    // Create a new row in the table
+                    var row = table.insertRow(-1);
+                    row.id = `row_${rowCounter}`;
+                    rowCounter++;
+                    // Fill all the cells in the row.
+                    // The `-1` means that it will insert it at the end of the row
+                    var clickCell = row.insertCell(-1);
+                    clickCell.innerHTML = `<a class='pseudoLink'>${hf.id}</a>`;
+                    clickCell.onclick = function(){showJson(hf, "character-moreInfo", row.id);};
+                    row.insertCell(-1).innerHTML = formatName(hf.name);     //Name
+                    row.insertCell(-1).innerHTML = hf.race.charAt(0).toUpperCase() + hf.race.slice(1);      //Race
+                    var actionsCell = row.insertCell(-1);
+                    //create stats link
+                    var statsLink = document.createElement('a');
+                        statsLink.classList = "pseudoLink";
+                        statsLink.innerHTML = "Show Stats";
+                        statsLink.onclick = function() { highlightRow("hf_table", row.id); showStats(hf, row.id); }
+                        actionsCell.appendChild(statsLink);
+                    actionsCell.innerHTML += " ";
+                    //create event link
+                    var eventLink = document.createElement('a');
+                        eventLink.classList = "pseudoLink";
+                        eventLink.innerHTML = "Show Events";
+                        eventLink.onclick = function() { highlightRow("hf_table", row.id); showHfEvents(hf, row.id); }
+                        actionsCell.appendChild(eventLink);
+                        
+                    //statsCell.onclick = function(){showHfStats(hf, prefix);};
+                },
+            );
+        break;
     }
 }
 
-function showJson(he, prefix) {
-    var jsonDiv = document.getElementById(`${prefix}_jsonDiv`);
-    jsonDiv.innerHTML = JSON.stringify(he, null, 4);
+function showJson(he, targetDivId) {
+    var jsonDiv = document.getElementById(`${targetDivId}`);
+    jsonDiv.innerHTML = `<pre>${JSON.stringify(he, null, 4)}</pre>`;
 }
 
 //--------TAB STUFF-----------------------------------------------
-function openTab(evt, cityName) {
+function openTab(evt, tabName) {
   // Declare all variables
   var i, tabcontent, tablinks;
 
@@ -103,7 +153,96 @@ function openTab(evt, cityName) {
   }
 
   // Show the current tab, and add an "active" class to the button that opened the tab
-  document.getElementById(cityName).style.display = "block";
-  evt.currentTarget.className += " active";
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.tabName += " active";
+  switch (tabName) {
+    case "all-events-container":
+    load_table("he", `${base_url}/api/historical_events?per_page=20`);
+    break;
+    case "character-container":
+    load_table("hf", `${base_url}/api/historical_figures?per_page=20`);
+    break;
+    }
 }
-//-----------------------------------------------------------------
+//===============================
+//Historical Figure functions
+//===============================
+
+//highlights the row after unhighlighting other rows
+function highlightRow(tableId, rowId) {
+    //unhighlight all rows
+    //document.getElementById("hf_table").rows.forEach(element => element.className = "");
+    for (let row of document.getElementById(tableId).rows) {
+        row.className = "";
+    }
+    //highlight selected row
+    var row = document.getElementById(rowId);
+    row.className = "highlighted";
+}
+
+//shows the stats of the hf
+function showStats(hf) {
+
+}
+//shows the events for the hf
+async function showHfEvents(hf, rowId) {
+
+
+
+    var infoDiv = document.getElementById("character-moreInfo");
+    infoDiv.innerHTML =
+        `<h3>${formatName(hf.name)}'s Events</h3>
+        <table id="hfEventTable"><tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr></table>`;
+
+    var hfEventTable = document.getElementById("hfEventTable");
+
+    var data = fetch(`${base_url}/api/link_he_hf/${hf.id}?order=asc&order_by=year`)
+        .then(response => response.json())
+        .then(data => {
+            // Add a row for each event
+            data.data.forEach(
+                async he => {
+                    formatTime(he);
+                    // Add a new item to the table at the end.
+                    // Create a new row in the table
+                    var row = hfEventTable.insertRow(-1);
+                    // Fill all the cells in the row.
+                    // The `-1` means that it will insert it at the end of the row
+                    row.insertCell(-1).innerHTML = he.displayTime;
+                    row.insertCell(-1).innerHTML = he.type;
+                    var historicalEventCell = row.insertCell(-1);
+                    historicalEventCell.innerHTML = "";
+                    historicalEventCell.id = "char_he_" + he.id;
+                    var processedInfo = await historical_event_desc(he);
+                    var he_info = document.getElementById("char_he_" + he.id);
+                    he_info.innerHTML = processedInfo;
+                },
+            );
+        });
+    
+}
+
+//----------------------------------------------------------------
+function showStats(data) {
+
+}
+
+//==================================================================
+
+// Close the dropdown menu if the user clicks outside of it (runs on page-load)
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}

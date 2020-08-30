@@ -21,31 +21,39 @@
 <body>
 
     <script>
-        window.onload = function () {
-            var base_url = "http://localhost:20350";
-            load_table("he", `${base_url}/api/historical_events?per_page=20`);
-        }
-        
+        // window.onload = function () {
+        //     var base_url = "http://localhost:20350";
+        //     load_table("he", `${base_url}/api/historical_events?per_page=20`);
+        // }
+        base_url = "http://localhost:20350";
     </script>
 
-    <!-- Tab links -->
+<!-- Tabs -->
 <div class="tab">
   <button class="tablinks" onclick="openTab(event, 'all-events-container')">Events</button>
   <button class="tablinks" onclick="openTab(event, 'character-container')">Characters</button>
-  <button class="tablinks" onclick="openTab(event, 'collections-container')">Collections</button>
 </div>
 
-<!-- Tab content -->
+<!--========== Windows ===========-->
+<!-- Event Window ------------------>
 <div id="all-events-container" class="tabcontent">
   
     <h2>Events</h2>
-    <p>
+    <div class="pager">
         <button id="he_table_first">First page &lt;&lt;</button>
         <button id="he_table_prev">Previous page &lt;</button>
         <span id="he_page_nr">0</span>
         <button id="he_table_next">Next page &gt;</button>
         <button id="he_table_last">Last page &gt;&gt;</button>
-    </p>
+    </div>
+    <div class="dropdown">
+      <button onclick="document.getElementById('myDropdown').classList.toggle('show')" class="dropbtn">Filter By Type</button>
+      <div id="myDropdown" class="dropdown-content">
+        <a href="#">Link 1</a>
+        <a href="#">Link 2</a>
+        <a href="#">Link 3</a>
+      </div>
+    </div>
     <table id="he_table">
     </table>
 
@@ -54,37 +62,28 @@
         <h3>Event JSON</h3>
         <pre id="he_jsonDiv"></pre>
     </div>
-
 </div>
 
+<!-- Character Window ----------------------->
 <div id="character-container" class="tabcontent">
   
   <h2>Characters</h2>
-    <p>
+    <div class="pager">
         <button id="hf_table_first">First page &lt;&lt;</button>
         <button id="hf_table_prev">Previous page &lt;</button>
         <span id="hf_page_nr">0</span>
         <button id="hf_table_next">Next page &gt;</button>
         <button id="hf_table_last">Last page &gt;&gt;</button>
-    </p>
+    </div>
     <table id="hf_table">
     </table>
 
      <!--Event Info -->
-    <div style="width: 500px;">
-        <h3>Historical Figure JSON</h3>
-        <pre id="hf_jsonDiv"></pre>
+    <div id="character-moreInfo">
+
     </div>
-
+    <br style="clear:both"/>
 </div>
-
-<div id="collections-container" class="tabcontent">
-  
-  <h2>Event Collections</h2>
-
-
-</div>
-
 
 </body>
 
