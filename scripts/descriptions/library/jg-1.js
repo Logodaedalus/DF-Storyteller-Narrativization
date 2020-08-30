@@ -60,18 +60,7 @@ async function change_hf_state_desc(he) {
 
 	return eventDesc;
 }
-//---------------------------------------------------------------
-//It appears this event type doesn't contain the "relationship" field necessary to figure out what the hell is going on??
-//But hf_relationship_denied does???
-async function hf_relationship_desc(he) {
 
-    var source_hf = await load_ref_data(`historical_figures/${he.source_hf_id}`);     //load historical figure data
-    source_hf.name = formatName(source_hf.name);
-    var target_hf = await load_ref_data(`historical_figures/${he.target_hf_id}`);
-    target_hf.name = formatName(target_hf.name);
-
-    return `${source_hf.name} formed some kind of relationship with ${target_hf.name}`;
-}
 //---------------------------------------------------------------
 //TODO: get name of where they died...is subregion_id the same as a region id???
 async function hf_died_desc(he) {

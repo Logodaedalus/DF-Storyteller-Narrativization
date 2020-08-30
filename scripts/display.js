@@ -60,7 +60,6 @@ async function add_data_to_table(prefix, data){
             data.forEach(
                 async he => {
 
-                    formatTime(he);
                     // Add a new item to the table at the end.
                     // Create a new row in the table
                     var row = table.insertRow(-1);
@@ -70,7 +69,7 @@ async function add_data_to_table(prefix, data){
                     //clickCell.innerHTML = `<a href="javascript:showJson(${he})">${he.id}</a>`;
                     clickCell.innerHTML = `<a class='pseudoLink'>${he.id}</a>`;
                     clickCell.onclick = function(){showJson(he, prefix + "_jsonDiv");};
-                    row.insertCell(-1).innerHTML = he.displayTime;
+                    row.insertCell(-1).innerHTML = formatTime(he).dwarfFullDate;
                     row.insertCell(-1).innerHTML = he.type;
                     var chronicleCell = row.insertCell(-1);
                     chronicleCell.innerHTML = "";
@@ -231,13 +230,12 @@ async function showHfEvents(hf, rowId) {
             // Add a row for each event
             data.data.forEach(
                 async he => {
-                    formatTime(he);
                     // Add a new item to the table at the end.
                     // Create a new row in the table
                     var row = hfEventTable.insertRow(-1);
                     // Fill all the cells in the row.
                     // The `-1` means that it will insert it at the end of the row
-                    row.insertCell(-1).innerHTML = he.displayTime;
+                    row.insertCell(-1).innerHTML = formatTime(he).dwarfFullDate;
                     row.insertCell(-1).innerHTML = he.type;
                     var historicalEventCell = row.insertCell(-1);
                     historicalEventCell.innerHTML = "";
@@ -394,7 +392,8 @@ function populateTypeDropdown() {
             statsLink.classList = "pseudoLink";
             statsLink.innerHTML = type;
             statsLink.onclick = function() { 
-                load_table("tt", `${base_url}/api/historical_events?filter_on_type=${type}`); 
+                load_table("tt", `${base_url}/api/historical_events?filter_on_type=${type}`);
+
             }
         ttDropdown.appendChild(statsLink);
     });
