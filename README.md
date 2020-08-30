@@ -42,5 +42,5 @@ switch(historicalEvent.type) {
 # Requested Style
 
 * Event descriptions should be relatively self-contained, and shouldn't rely heavily (if at all) on other events.
-* The idea is to first put in a one-event baseline, then build up with more elaborate story scaffolds after that's established.
-* For example: "Thorkron was strangled by Beedle the goblin" is what we're doing now. Later (soon?) we'll do scaffolds so we can do "Beedle the goblin strangled Thorkon, finally getting revenge for his poor murdered brother."
+* The idea is to first put in a one-event baseline, then build up with more elaborate sifting patterns after that's established.
+* For example: "Thorkron was strangled by Beedle the goblin" is what we're doing now. Later (soon?) we'll do sifting patterns so we can do "Beedle the goblin strangled Thorkon, finally getting revenge for his poor murdered brother."
