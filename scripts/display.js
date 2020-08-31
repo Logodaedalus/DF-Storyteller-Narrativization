@@ -5,12 +5,38 @@ async function load_table(prefix, link){
         .then(response => response.json())
         .then(data => {
             add_data_to_table(prefix, data.data);           //add table values in
-            setPager(prefix, data);
+            setPager(prefix, data, link);
         });
 }
 //---------------------------------------------------------------
 //sets up the pager on a table
-function setPager(prefix, data) {
+//link is optional...used for fudging links when db doesn't return them properly
+function setPager(prefix, data, link) {
+//${base_url}/api/historical_events?filter_on_type=${type}&per_page=100&page=0
+    
+    if (prefix == "tt") {
+        var urlParts = link.split('&');
+        var pageNumber = parseInt(urlParts[urlParts.length-1].split('=')[1]);
+        var perPageValue = parseInt(urlParts.find(a =>a.includes("per_page=")).replace('per_page=',''));
+        var prevNumber = pageNumber - 1;
+        if (prevNumber < 0) { prevNumber = 0; }
+        var nextNumber = pageNumber + 1;
+        var lastNumber = Math.ceil(data.total_item_count / perPageValue) - 1;
+        if (lastNumber < 0) { lastNumber = 0; }
+        
+        urlParts.pop();
+        var newLink = urlParts.join("&");
+        data.links.self = link;
+        data.links.first = newLink + "&page=0";
+        data.links.prev =  newLink + "&page=" + prevNumber;
+        data.links.next =  newLink + "&page=" + nextNumber;
+        data.links.last =  newLink + "&page=" + lastNumber;
+        data.page_nr = pageNumber;
+    }
+
+    
+
+
     // Set info on next and prev buttons
     // Got all the html DOM elements
     var first_link = document.getElementById(`${prefix}_table_first`);
@@ -147,8 +173,13 @@ async function add_data_to_table(prefix, data){
                     var clickCell = row.insertCell(-1);
                     //clickCell.innerHTML = `<a href="javascript:showJson(${he})">${he.id}</a>`;
                     clickCell.innerHTML = `<a class='pseudoLink'>${he.id}</a>`;
-                    clickCell.onclick = function(){showJson(he, prefix + "_jsonDiv");};
+                    clickCell.onclick = async function(){
+                        var processedInfo = await historical_event_desc(he);
+                        var he_info = document.getElementById("tt_chron_" + he.id);
+                        he_info.innerHTML = processedInfo;
+                        showJson(he, prefix + "_jsonDiv"); };
                     var chronicleCell = row.insertCell(-1);
+                    chronicleCell.id = "tt_chron_" + he.id;
                     chronicleCell.innerHTML = await historical_event_desc(he);
                 },
             );
@@ -392,7 +423,7 @@ function populateTypeDropdown() {
             statsLink.classList = "pseudoLink";
             statsLink.innerHTML = type;
             statsLink.onclick = function() { 
-                load_table("tt", `${base_url}/api/historical_events?filter_on_type=${type}`);
+                load_table("tt", `${base_url}/api/historical_events?filter_on_type=${type}&per_page=200&page=0`);
 
             }
         ttDropdown.appendChild(statsLink);

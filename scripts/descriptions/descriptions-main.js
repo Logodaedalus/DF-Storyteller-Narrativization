@@ -18,6 +18,7 @@ async function historical_event_desc(historicalEvent){
 		break;
 		case "hf_relationship":
 			eventDesc += await hf_relationship_desc(historicalEvent);
+		break;
 		default:
 			eventDesc += `Unknown Event: ${historicalEvent.type}`;
 		break;
