@@ -103,7 +103,6 @@ function ordinal(n) {
   return n + (s[(v - 20) % 10] || s[v] || s[0]);
 }
 //---------------------------------------------------------------
-//
 function getPronouns(caste) {
 //They went to their doctor themself to see if it was theirs
   switch (caste) {
@@ -131,4 +130,19 @@ function getPronouns(caste) {
             themself: "themself"
         };
   }
+}
+//---------------------------------------------------------------
+function a_an(word) {
+    if (text.ToLower().StartsWith("a") || 
+        text.ToLower().StartsWith("e") || 
+        text.ToLower().StartsWith("i") || 
+        text.ToLower().StartsWith("o") || 
+        text.ToLower().StartsWith("u"))
+    {
+        return = "an " + word;
+    }
+    else
+    {
+        return = "a " + word;
+    }
 }

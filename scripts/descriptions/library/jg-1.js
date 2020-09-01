@@ -1,7 +1,6 @@
 
 async function change_hf_job_desc(he) {
 
-	var site = await load_ref_data(`sites/${he.site_id}`);           //load data for the event's site (he.site_id)
 	var hf = await load_ref_data(`historical_figures/${he.hf_id}`);  //load data for the historical figure (he.hf_id)
 
 	var eventDesc = "";      //create a blank string
@@ -9,12 +8,12 @@ async function change_hf_job_desc(he) {
 	he.new_job = formatJob(he.new_job);         //run formatter on job (in description-utils)
 	he.old_job = formatJob(he.old_job);         //run formatter on job (in description-utils)
 
-	if(he.new_job == "standard") {              //create text
-		eventDesc += `${hf.name} stopped being a ${he.old_job} in ${site.name}`;
-	} else if (he.old_job == "standard"){
-		eventDesc += `${hf.name} became a ${he.new_job} in ${site.name}`;
+	if(he.new_job != "standard" && he.old_job != "standard") {              //create text
+		eventDesc += `${hf.name} stopped being ${a_an(he.old_job)} and became ${a_an(he.new_job)}`;
+	} else if (he.new_job != "standard"){
+		eventDesc += `${hf.name} became ${a_an(he.new_job)}`;
 	} else {
-		eventDesc += `${hf.name} gave up being a ${he.old_job} to become a ${he.new_job} in ${site.name}`;
+		eventDesc += `${hf.name} stopped being a ${a_an(he.old_job)}`;
 	}
 
    eventDesc += "."
@@ -219,3 +218,5 @@ async function hf_died_desc(he) {
    
 	return eventDesc;
 }
+
+//--------------------
