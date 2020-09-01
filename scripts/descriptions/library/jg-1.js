@@ -219,4 +219,15 @@ async function hf_died_desc(he) {
 	return eventDesc;
 }
 
-//--------------------
+//---------------------------------------------------------------
+async function creature_devoured_desc(he) {
+
+    var victim = await load_ref_data(`historical_figures/${he.victim}`);     //load historical figure data
+    var eater = await load_ref_data(`historical_figures/${he.eater_hf_id}`);     //load historical figure data
+
+    var eventDesc = "";
+
+    eventDesc+= `${victim.name} was devoured by ${eater.name}.`;
+
+    return eventDesc;
+}

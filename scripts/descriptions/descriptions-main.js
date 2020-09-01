@@ -19,6 +19,9 @@ async function historical_event_desc(historicalEvent){
 		case "hf_relationship":
 			eventDesc += await hf_relationship_desc(historicalEvent);
 		break;
+		case "creature_devoured":
+			eventDesc += await creature_devoured_desc(historicalEvent);
+			break;
 		default:
 			eventDesc += `Unknown Event: ${historicalEvent.type}`;
 		break;
@@ -28,49 +31,10 @@ async function historical_event_desc(historicalEvent){
 
 }
 
-/*
-Accepts a string URL, returns an object
-apiUrl: "historical_events/275"
-returns: { data object }
-*/
-//TODO: detect if returned value is "doesn't exist" and if so, return unknown data object
-// function load_ref_data(apiUrl) {
-
-// 	var unknownSite = {					//default object for unknown sites
-// 		id: -1,
-// 		type: "place",
-// 		name: "an unknown place",
-// 		structures: [],
-// 		site_properties: [],
-// 		civ_id: null,
-// 		cur_owner_id: null
-// 	}
-
-// 	switch(apiUrl){
-// 		case "sites/-1":
-// 		return unknownSite;
-// 		break;
-// 	};
-
-// 	var base_url = "http://localhost:20350";
-
-// 	fetch(`${base_url}/api/${apiUrl}`)
-// 		.then(function (response) {
-// 			// Get a JSON object from the response
-// 			// This is a weird quirk of Fetch
-// 			return response.json();
-// 		}).then(function (data) {
-
-// 	 		// Cache the data to a variable
-// 	 		return data;
-
-// 		}).catch(function (error) {
-// 			// if there's an error, log it
-// 			console.log(error);
-// 		});
-// }
-
 async function load_ref_data(apiUrl) {
+
+	var formatResult = true;
+
 	var unknownSite = {					//default object for unknown sites
 		id: -1,
 		type: "place",
@@ -81,10 +45,30 @@ async function load_ref_data(apiUrl) {
 		cur_owner_id: null
 	}
 
+	var unknownWork = {
+		id:-1,
+		title: "some unknown work",
+		author_hf_id : "an anonymous author",
+		form: "an unknown form"
+	}
+
+	var unknownHf = {					//default object for unknown sites
+		id: -1,
+		name: "an unknown person",
+		race: "an unknown race",
+		caste: "default"
+	}
+
 	switch(apiUrl){
 		case "sites/-1":
-		return unknownSite;
-		break;
+			return unknownSite;
+			break;
+		case "written_contents/-1":
+			return unknownWork;
+			break;
+		case "historical_figures/-1":
+			return unknownHf;
+			break;
 	};
 
 	var base_url = "http://localhost:20350";
@@ -92,9 +76,7 @@ async function load_ref_data(apiUrl) {
 	var response = await fetch(`${base_url}/api/${apiUrl}`);
 	var data = await response.json();
 
-	if (data.name) {
-		data.name = formatName(data.name);
-	}
+	if (data.name) { data.name = formatName(data.name); }
 	return data;
 }
 

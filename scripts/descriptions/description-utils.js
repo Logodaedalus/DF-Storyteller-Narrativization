@@ -38,6 +38,8 @@ function formatJob(job) {
 	return formattedJob;
 }
 //---------------------------------------------------------------
+
+//---------------------------------------------------------------
 //processes time from seconds72 to something nice
 //There are 12 months in a Dwarf Fortress year, exactly 28 days in each month, 24 hours in each day, 60 minutes in each hour, and 60 seconds in each minute. Divide seconds by 72 to get the seconds72 value. There are 1,200 seconds72 in a day. There are 403,200 seconds72 in a Dwarf Fortress year.
 function formatTime(historicalEvent) {
@@ -96,6 +98,15 @@ function formatTime(historicalEvent) {
 
 }
 //---------------------------------------------------------------
+//formatting function that returns titles with failovers for missing data in a variety of fields
+//ie if a "long title" is requested but there isn't data to support it, it will return a short title
+// type: title, titleForm, titleFormStyle
+function getWorkTitle(work, type) {
+//title: The Ignited Copper
+//titleForm: The Ignited Copper, a musical composition
+//titleFormStyle: Unholinesses: Suddenly The Wind Knows Afterward, a floridly disjointed poem
+}
+//---------------------------------------------------------------
 //--adds "th", "st" to numbers
 function ordinal(n) {
   var s = ["th", "st", "nd", "rd"],
@@ -139,10 +150,10 @@ function a_an(word) {
         text.ToLower().StartsWith("o") || 
         text.ToLower().StartsWith("u"))
     {
-        return = "an " + word;
+        return "an " + word;
     }
     else
     {
-        return = "a " + word;
+        return "a " + word;
     }
 }
