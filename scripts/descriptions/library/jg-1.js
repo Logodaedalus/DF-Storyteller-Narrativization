@@ -1,3 +1,4 @@
+//code adapted from https://github.com/Kromtec/LegendsViewer
 
 async function change_hf_job_desc(he) {
 

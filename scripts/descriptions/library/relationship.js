@@ -1,4 +1,5 @@
-//---------------------------------------------------------------
+//code adapted from https://github.com/Kromtec/LegendsViewer
+
 async function hf_relationship_desc(he) {
 
 	var source_hf = await load_ref_data(`historical_figures/${he.source_hf_id}`);     //load historical figure data

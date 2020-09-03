@@ -22,6 +22,9 @@ async function historical_event_desc(historicalEvent){
 		case "creature_devoured":
 			eventDesc += await creature_devoured_desc(historicalEvent);
 			break;
+		case "written_content_composed":
+			eventDesc += await written_content_composed_desc(historicalEvent);
+			break;
 		default:
 			eventDesc += `Unknown Event: ${historicalEvent.type}`;
 		break;

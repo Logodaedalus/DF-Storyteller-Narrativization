@@ -102,9 +102,190 @@ function formatTime(historicalEvent) {
 //ie if a "long title" is requested but there isn't data to support it, it will return a short title
 // type: title, titleForm, titleFormStyle
 function getWorkTitle(work, type) {
-//title: The Ignited Copper
-//titleForm: The Ignited Copper, a musical composition
-//titleFormStyle: Unholinesses: Suddenly The Wind Knows Afterward, a floridly disjointed poem
+//type = title: The Ignited Copper
+//type = titleForm: The Ignited Copper, a musical composition
+//type = titleFormStyle: Unholinesses: Suddenly The Wind Knows Afterward, a floridly disjointed poem
+
+    var titleType = {
+        title : "an unknown work",
+        titleForm : "",
+        titleFormStyle : "",
+    }
+
+    if (work.title != null) { titleType.title = "<em>" + work.title + "</em>"; }
+
+    if (type == "title") { return titleType.title; }
+    //----------------------
+    //type = titleForm: The Ignited Copper, a musical composition
+    //if (work.title == null && work.form == null) { titleType.titleForm = "an unknown work"; }
+    //if (work.title != null && work.form == null) { titleType.titleForm = titleType.title; }
+    if (work.form == null) { titleType.titleForm = titleType.title; }
+
+    var form = ""
+
+    switch(work.form) {
+        case "autobiography":
+            form = "autobiography";
+            break;
+        case "biography":
+            form = "biography";
+            break;
+        case "chronicle":
+            form = "chronicle";
+            break;
+        case "dialog":
+            form = "dialog";
+            break;
+        case "essay":
+            form = "essay";
+            break;
+        case "guide":
+            form = "guide";
+            break;
+        case "letter":
+            form = "letter";
+            break;
+        case "manual":
+            form = "manual";
+            break;
+        case "novel":
+            form = "novel";
+            break;
+        case "play":
+            form = "play";
+            break;
+        case "poem":
+            form = "poem";
+            break;
+        case "short story":
+            form = "short story";
+            break;
+        case "musical composition":
+            form = "musical composition";
+            break;
+        case "choreography":
+            form = "choreography";
+            break;
+        case "cultural history":
+            form = "cultural history";
+            break;
+        case "star chart":
+            form = "star chart";
+            break;
+        case "comparative biography":
+            form = "comparative biography";
+            break;
+        case "cultural comparison":
+            form = "cultural comparison";
+            break;
+        case "atlas":
+            form = "atlas";
+            break;
+        case "treatise on technological evolution":
+            form = "treatise on technological evolution";
+            break;
+        case "alternate history":
+            form = "alternate history";
+            break;
+        case "star catalogue":
+            form = "star catalogue";
+            break;
+        case "dictionary":
+            form = "dictionary";
+            break;
+        case "genealogy":
+            form = "genealogy";
+            break;
+        case "encyclopedia":
+            form = "encyclopedia";
+            break;
+        case "biographical dictionary":
+            form = "biographical dictionary";
+            break;
+        default:
+            form = "an unknown form";
+            console.error("unknown form " + work.form);
+            break;
+    }
+    
+    if (work.title == null && work.form != null) { titleType.titleForm = `an untitled ${form}`; }
+    if (work.title != null && work.form != null) { titleType.titleForm = `${titleType.title}, ${a_an(form)}`; }
+
+    if (type == "titleForm") { return titleType.titleForm; }
+    //--------------
+    //type = titleFormStyle: Unholinesses: Suddenly The Wind Knows Afterward, a floridly disjointed poem
+    if (work.title == null && work.form == null && work.style.length == 0) { titleType.titleFormStyle = "an unknown work"; }
+    if (work.title == null && work.form != null && work.style.length == 0) { titleType.titleFormStyle = `an untitled ${form}`; }
+    if (work.title != null && work.form == null && work.style.length == 0) { titleType.titleFormStyle = titleType.title; }
+    if (work.title != null && work.form != null && work.style.length == 0) { titleType.titleFormStyle = titleType.titleForm; }
+
+    var style = "";
+
+    for (var x=0; x < work.style.length; x++) {
+        switch(work.style[x].label){
+            case "self indulgent":
+            work.style[x].label = "self-indulgent";
+            case "rant":
+            work.style[x].label = "ranting";
+        }
+    }
+
+    if (work.style.length == 1) { 
+        style = work.style[0].label; }
+    if (work.style.length > 1) { 
+        style = adverbify(work.style[0].label) + " " + work.style[1].label; }
+
+    if (work.title == null && work.form == null && work.style.length > 0) { titleType.titleFormStyle = `${a_an(style)} untitled work`; }
+    if (work.title == null && work.form != null && work.style.length > 0) { titleType.titleFormStyle = `${a_an(style)} untitled ${form}`; }
+    if (work.title != null && work.form == null && work.style.length > 0) { titleType.titleFormStyle = `${titleType.title}, ${a_an(style)} work`;}
+    if (work.title != null && work.form != null && work.style.length > 0) { titleType.titleFormStyle = `${titleType.title}, ${a_an(style)} ${form}`;}
+
+    return titleType.titleFormStyle;
+}
+//---------------------------------------------------------------
+//returns the adjective form of the adverb (used for style descriptions)
+function adverbify(adjective) {
+    switch(adjective){
+        case "meandering":
+        return "meanderingly";
+        case "cheerful":
+        return "cheerfully";
+        case "melancholy":
+        return "melancholically";
+        case "mechanical":
+        return "mechanically";
+        case "serious":
+        return "earnestly";
+        case "disjointed":
+        return "disjointedly";
+        case "florid":
+        return "floridly";
+        case "forceful":
+        return "forcefully";
+        case "humorous":
+        return "humorously";
+        case "puerile":
+        return "immaturely";
+        case "self-indulgent":      //this is the type "self indulgent" but we format it before this function to "self-indulgent"
+        return "self-indulgently";
+        case "compassionate":
+        return "compassionately";
+        case "vicious":
+        return "viciously";
+        case "concise":
+        return "concisely";
+        case "sardonic":
+        return "sardonically";
+        case "witty":
+        return "wittily";
+        case "ranting":             //this is the type "rant" but we format it before this function to "ranting"
+        return "bombastically";
+        case "tender":
+        return "tenderly";
+        default:
+        console.error("unhandled adverbification for " + adjective);
+        return adjective + "ly";
+    }
 }
 //---------------------------------------------------------------
 //--adds "th", "st" to numbers
@@ -144,11 +325,11 @@ function getPronouns(caste) {
 }
 //---------------------------------------------------------------
 function a_an(word) {
-    if (text.ToLower().StartsWith("a") || 
-        text.ToLower().StartsWith("e") || 
-        text.ToLower().StartsWith("i") || 
-        text.ToLower().StartsWith("o") || 
-        text.ToLower().StartsWith("u"))
+    if (word.toLowerCase().startsWith("a") || 
+        word.toLowerCase().startsWith("e") || 
+        word.toLowerCase().startsWith("i") || 
+        word.toLowerCase().startsWith("o") || 
+        word.toLowerCase().startsWith("u"))
     {
         return "an " + word;
     }
