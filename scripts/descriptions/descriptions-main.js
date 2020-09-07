@@ -28,6 +28,9 @@ async function historical_event_desc(historicalEvent){
 		case "add_hf_entity_link":
 			eventDesc += await add_hf_entity_link_desc(historicalEvent);
 			break;
+		case "hf_simple_battle_event":
+			eventDesc += await hf_simple_battle_event_desc(historicalEvent);
+			break;
 		default:
 			eventDesc += `Unknown Event: ${historicalEvent.type}`;
 		break;

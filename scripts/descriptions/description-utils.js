@@ -445,6 +445,7 @@ function getPronouns(caste) {
     case "male":
         return {
             they: "he",
+            them: "him",
             their: "his",
             theirs: "his",
             themself: "himself"
@@ -453,6 +454,7 @@ function getPronouns(caste) {
     case "female":
         return {
             they: "she",
+            them: "her",
             their: "her",
             theirs: "hers",
             themself: "herself"
@@ -461,6 +463,7 @@ function getPronouns(caste) {
     default:
         return {
             they: "they",
+            them: "them",
             their: "their",
             theirs: "theirs",
             themself: "themself"
