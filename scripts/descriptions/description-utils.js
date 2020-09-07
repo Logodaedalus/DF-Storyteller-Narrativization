@@ -243,6 +243,150 @@ function getWorkTitle(work, type) {
     return titleType.titleFormStyle;
 }
 //---------------------------------------------------------------
+//type = null or "name": The Scorching of Thieves
+//type = "nameRace": The Scorching of Thieves, a serpent man guild
+//type = "nameVerbose": The Scorching of Thieves, a serpent man woodcutter's guild
+function getEntityName(entity, type) {
+
+    var name;
+    var nameRace;
+    var nameVerbose;
+
+    if (entity.name !== null) { name = entity.name; }
+    else { name = "an unnamed organization"; }
+
+    var orgName;
+    var orgNameVerbose;
+
+    switch(entity.type_) {
+        case "civilization":
+            orgName = "civilization";
+        break;
+        case "religion":
+            orgName = "religion";
+        break;
+        case "sitegovernment":          //TODO: of what site?
+            orgName = "governing body";
+            orgNameVerbose = ""
+        break;
+        case "nomadicgroup":
+            orgName = "nomadic group";
+        break;
+        case "outcast":
+            orgName = "group of outcasts";
+        break;
+        case "migratinggroup":
+            orgName = "migrating group";
+        break;
+        case "performancetroupe":
+            orgName = "performance troupe";
+        break;
+        case "guild":
+            orgName = "guild";        
+        break;
+        case "militaryunit":
+            orgName = "military unit";        
+        break;
+        case "merchantcompany":
+            orgName = "merchant company";
+        break;
+        case undefined:
+            orgName = "group of people";
+        break;
+        default:
+        console.error("unhandled entity type: " + entity.type_);
+            orgName = "group of people";
+        break;
+    }
+    if (entity.name == null) { name = `an unnamed ${orgName}`; }
+    else { name = entity.name; }
+
+    //if no type was provided, or type is "name", return it
+    if (type == undefined || type == "name") { return name; }
+    //---------------------------
+    //type = "nameRace": The Scorching of Thieves, a serpent man guild
+    var race = getRace(entity.race);
+    if (type == "nameRace") {
+        if (entity.name !== null && entity.race !== null && entity.type_ !== null) { nameRace = `${name}, ${a_an(race)} ${orgName}`; }
+        if (entity.name !== null && entity.race !== null && entity.type_ === null) { nameRace = `${name}, a group of ${pluralRace(race)}`; }
+        if (entity.name !== null && entity.race === null && entity.type_ !== null) { nameRace = `${name}, ${a_an(orgName)}`; }
+        if (entity.name === null && entity.race !== null && entity.type_ !== null) { nameRace = `an unnamed ${race} ${orgName}`; }
+        if (entity.name === null && entity.race !== null && entity.type_ === null) { nameRace = `an unnamed group of ${pluralRace(race)}` ;}
+        if (entity.name === null && entity.race === null && entity.type_ !== null) { nameRace = `an unnamed ${orgName}`; }
+
+        return nameRace;
+    }
+    //--------------------------
+    //type = "nameVerbose": The Scorching of Thieves, a serpent man woodcutter's guild
+    //TODO
+        
+
+}
+//---------------------------------------------------------------
+//returns the race or "unknown race"
+function getRace(race) {
+    switch(race) {
+        case "olm_man":
+        return "olm man";
+        break;
+        case "cave_fish_man":
+        return "cave fish man";
+        break;
+        case "cave_swallow_man":
+        return "cave swallow man";
+        break;
+        case "serpent_man":
+        return "serpent man";
+        break;
+        case "bat_man":
+        return "bat man";
+        break;
+        case "reptile_man":
+        return "reptile man";
+        break;
+        case "amphibian_man":
+        return "amphibian man";
+        break;
+        case "dwarf":
+        return "dwarf";
+        break;
+        case "elf":
+        return "elf";
+        break;
+        case "goblin":
+        return "goblin";
+        break;
+        case "human":
+        return "human";
+        break;
+        case "kobold":
+        return "kobold";
+        break;
+        default:
+            if (race !== undefined) {console.error("unhandled race: " + race);}
+        if (race !== undefined && race.includes("_")) { return race.replace(/_/g, " "); }
+        else { return "person of unknown race"; }
+        break;
+        
+    }
+}
+
+function pluralRace(race) {
+    switch(race) {
+        case "dwarf":
+        return "dwarves";
+        break;
+        case "elf":
+        return "elves";
+        break;
+        default:
+        if (race.substr(-3, str.length-1) == "man") {
+            return race.substring(0, race.length - 2) + 'n';
+        }
+    }
+}
+
+//---------------------------------------------------------------
 //returns the adjective form of the adverb (used for style descriptions)
 function adverbify(adjective) {
     switch(adjective){

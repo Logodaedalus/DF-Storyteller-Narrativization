@@ -25,6 +25,9 @@ async function historical_event_desc(historicalEvent){
 		case "written_content_composed":
 			eventDesc += await written_content_composed_desc(historicalEvent);
 			break;
+		case "add_hf_entity_link":
+			eventDesc += await add_hf_entity_link_desc(historicalEvent);
+			break;
 		default:
 			eventDesc += `Unknown Event: ${historicalEvent.type}`;
 		break;
