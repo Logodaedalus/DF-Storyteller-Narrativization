@@ -8,6 +8,7 @@ async function add_hf_entity_honor_desc(length) {
 async function add_hf_entity_link_desc(he, length) {
 
 	var hf = await load_ref_data(`historical_figures/${he.hf_id}`);     //load historical figure data
+	hf.name = formatName(hf.name);
 	var appointer = await load_ref_data(`historical_figures/${he.appointer_hf_id}`);     //load historical figure data
 	var hfActionPromisedTo = await load_ref_data(`historical_figures/${he.promise_to_hf_id}`);     //load historical figure data
 	var civ = await load_ref_data(`entities/${he.civ_id}`);
@@ -17,26 +18,26 @@ async function add_hf_entity_link_desc(he, length) {
 	switch(he.link_type) {
 		
 		case "prisoner":
-			eventDesc += "was imprisoned by ";
+			eventDesc += `${hf.name} was imprisoned by ${getEntityName(civ, "nameRace")}`;
 			break;
 		case "enemy":
-			eventDesc += `became an enemy of ${getEntityName(civ, "nameRace")}.`;
+			eventDesc += `${hf.name} became an enemy of ${getEntityName(civ, "nameRace")}.`;
 			break;
 		case "member":
-			eventDesc += `became a member of ${getEntityName(civ, "nameRace")}.`;
+			eventDesc += `${hf.name} became a member of ${getEntityName(civ, "nameRace")}.`;
 			break;
 		case "former member":
-			eventDesc += `became a former member of ${getEntityName(civ, "nameRace")}.`;
+			eventDesc += `${hf.name} became a former member of ${getEntityName(civ, "nameRace")}.`;
 			break;
 		case "slave":
-			eventDesc += `was enslaved by ${getEntityName(civ, "nameRace")}`;
+			eventDesc += `${hf.name} was enslaved by ${getEntityName(civ, "nameRace")}`;
 			break;
 		case "position":
-			if (he.position !== undefined) { eventDesc += `was given the position of ${he.position} within ${getEntityName(civ, "nameRace")}.`; }
-			else { eventDesc += `was given a new position within ${getEntityName(civ, "nameRace")}.`; }
+			if (he.position !== undefined) { eventDesc += `${hf.name} was given the position of ${he.position} within ${getEntityName(civ, "nameRace")}.`; }
+			else { eventDesc += `${hf.name} was given a new position within ${getEntityName(civ, "nameRace")}.`; }
 			break;
 		case "squad":
-			eventDesc += `became a member of ${getEntityName(civ, "nameRace")}`;
+			eventDesc += `${hf.name} became a member of ${getEntityName(civ, "nameRace")}`;
 			break;
 		default:
 			console.error("unhandled link type: " + he.link_type);
