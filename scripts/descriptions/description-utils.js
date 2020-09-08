@@ -25,6 +25,11 @@ function formatName(name) {
   return str;
 }
 //---------------------------------------------------------------
+//replace underscores with spaces (relevant for many db entities, like jobs, item_types, etc)
+function format(str) {
+    return str.replace(/_/g, " ")
+}
+//---------------------------------------------------------------
 function formatJob(job) {
 
 	var formattedJob;
@@ -472,7 +477,10 @@ function getPronouns(caste) {
 }
 //---------------------------------------------------------------
 function a_an(word) {
-    if (word.toLowerCase().startsWith("a") || 
+    if (word.toLowerCase().endsWith("s") ||
+        word.toLowerCase() === "armor" ) {
+        return "some " + word;
+    } else if (word.toLowerCase().startsWith("a") || 
         word.toLowerCase().startsWith("e") || 
         word.toLowerCase().startsWith("i") || 
         word.toLowerCase().startsWith("o") || 

@@ -9,16 +9,16 @@ async function historical_event_desc(historicalEvent){
 	switch(historicalEvent.type) {
 		case "change_hf_job":
 			eventDesc += await change_hf_job_desc(historicalEvent);
-		break;
+			break;
 		case "change_hf_state":
 			eventDesc += await change_hf_state_desc(historicalEvent);
-		break;
+			break;
 		case "hf_died":
 			eventDesc += await hf_died_desc(historicalEvent);
-		break;
+			break;
 		case "hf_relationship":
 			eventDesc += await hf_relationship_desc(historicalEvent);
-		break;
+			break;
 		case "creature_devoured":
 			eventDesc += await creature_devoured_desc(historicalEvent);
 			break;
@@ -30,6 +30,9 @@ async function historical_event_desc(historicalEvent){
 			break;
 		case "hf_simple_battle_event":
 			eventDesc += await hf_simple_battle_event_desc(historicalEvent);
+			break;
+		case "artifact_created":
+			eventDesc += await artifact_created_desc(historicalEvent);
 			break;
 		default:
 			eventDesc += `Unknown Event: ${historicalEvent.type}`;
