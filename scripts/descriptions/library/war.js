@@ -77,65 +77,6 @@ async function hf_simple_battle_event_desc(he, length) {
 
     eventDesc += ".";
     return eventDesc;
-
-	/*
-	if (SubType == HfSimpleBattleType.Hf2LostAfterGivingWounds)
-    {
-        eventString = GetYearTime() + HistoricalFigure2.ToLink(link, pov, this) + " was forced to retreat from "
-                                                                              + HistoricalFigure1.ToLink(link, pov, this) + " despite the latter's wounds";
-    }
-    else if (SubType == HfSimpleBattleType.Hf2LostAfterMutualWounds)
-    {
-        eventString += " eventually prevailed and " + HistoricalFigure2.ToLink(link, pov, this)
-                                                                                    + " was forced to make a hasty escape";
-    }
-    else if (SubType == HfSimpleBattleType.Hf2LostAfterReceivingWounds)
-    {
-        eventString = GetYearTime() + HistoricalFigure2.ToLink(link, pov, this) + " managed to escape from "
-                                                                                      + HistoricalFigure1.ToLink(link, pov, this) + "'s onslaught";
-    }
-    else if (SubType == HfSimpleBattleType.Scuffle)
-    {
-        eventString += " fought with " + HistoricalFigure2.ToLink(link, pov, this) + ". While defeated, the latter escaped unscathed";
-    }
-    else if (SubType == HfSimpleBattleType.Attacked)
-    {
-        eventString += " attacked " + HistoricalFigure2.ToLink(link, pov, this);
-    }
-    else if (SubType == HfSimpleBattleType.Confronted)
-    {
-        eventString += " confronted " + HistoricalFigure2.ToLink(link, pov, this);
-    }
-    else if (SubType == HfSimpleBattleType.HappenedUpon)
-    {
-        eventString += " happened upon " + HistoricalFigure2.ToLink(link, pov, this);
-    }
-    else if (SubType == HfSimpleBattleType.Ambushed)
-    {
-        eventString += " ambushed " + HistoricalFigure2.ToLink(link, pov, this);
-    }
-    else if (SubType == HfSimpleBattleType.Cornered)
-    {
-        eventString += " cornered " + HistoricalFigure2.ToLink(link, pov, this);
-    }
-    else if (SubType == HfSimpleBattleType.Surprised)
-    {
-        eventString += " surprised " + HistoricalFigure2.ToLink(link, pov, this);
-    }
-    else if (SubType == HfSimpleBattleType.GotIntoABrawl)
-    {
-        eventString += " got into a brawl with " + HistoricalFigure2.ToLink(link, pov, this);
-    }
-    else if (SubType == HfSimpleBattleType.Subdued)
-    {
-        eventString += " fought with and subdued " + HistoricalFigure2.ToLink(link, pov, this);
-    }
-    else
-    {
-        eventString += " fought (" + UnknownSubType + ") " + HistoricalFigure2.ToLink(link, pov, this);
-    }
-    */
-	return "unwritten event type: hf_simple_battle_event"
 }
 
 async function peace_accepted_desc(he, length) {
