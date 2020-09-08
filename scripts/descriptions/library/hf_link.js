@@ -44,6 +44,7 @@ async function add_hf_entity_link_desc(he, length) {
 			break;
 	}
 	return eventDesc;
+}
 /*
 
         public string Position { get; set; }
@@ -215,11 +216,12 @@ async function add_hf_entity_link_desc(he, length) {
             eventString += " in ";
             eventString += Year;
             return eventString;
-*/
+
 
 
 	return "unwritten event type: add_hf_entity_honor"
 }
+*/
 
 async function add_hf_hf_link_desc(length) {
 
