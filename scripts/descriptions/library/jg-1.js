@@ -69,18 +69,18 @@ async function hf_died_desc(he) {
     hf.name = formatName(hf.name);
     hf.pronouns = getPronouns(hf.caste);
 
-    if (he.slayer_race !== undefined) {      //if hf was killed...
+    if (he.slayer_hf_id > 0 || he.slayer_race !== undefined) {      //if hf was killed...
 
-        var slayer;
+        var slayer = {};
         if (he.slayer_hf_id > -1) {
             slayer = await load_ref_data(`historical_figures/${he.slayer_hf_id}`)     //load slayer data
-            slayer.name = formatName(slayer.name);
+            if (slayer.name == null) { slayer.name == `an unknown ${he.slayer_race.toLowerCase()}`; }
+            else { slayer.name = formatName(slayer.name); }
         }
         else {
-            slayer = {
-                name : "an unknown " + he.slayer_race.toLowerCase(),
-                caste : "nb",
-            }
+            if (he.slayer_race !== undefined) { slayer.name = `an unknown ${he.slayer_race.toLowerCase()}`; }
+            else { slayer.name = `an unknown person`; }
+            slayer.caste = "nb";
         }
         
         slayer.pronouns = getPronouns(slayer.caste);
@@ -95,7 +95,10 @@ async function hf_died_desc(he) {
                 break;
             case "murdered":
                 eventDesc = `${hf.name} was cruelly murdered by ${slayer.name}`;
-                break
+                break;
+            case "murder":
+                eventDesc = `${hf.name} was cruelly murdered by ${slayer.name}`;
+                break;
             case "shot":
                 eventDesc = `${hf.name} was shot by ${slayer.name}`;
                 break;
@@ -208,6 +211,8 @@ async function hf_died_desc(he) {
             case "scuttled":
                 eventDesc = `${hf.name} was scuttled`;
                 break;
+            case "struck_down":
+                eventDesc = `${hf.name} was struck down`
             default:
                 console.error("unhandled death type: " + he.death_cause + " for " + he.id);
                 eventDesc = `${hf.name} died of some unknown cause`;
