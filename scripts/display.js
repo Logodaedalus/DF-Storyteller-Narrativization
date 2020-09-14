@@ -273,7 +273,10 @@ async function showHfEvents(hf, rowId) {
                     historicalEventCell.id = "char_he_" + he.id;
                     var processedInfo = await historical_event_desc(he);
                     var he_info = document.getElementById("char_he_" + he.id);
-                    he_info.innerHTML = processedInfo;
+                    // If `he_info` does not exist, don't try to change it
+                    if( he_info ){
+                        he_info.innerHTML = processedInfo;
+                    }
                 },
             );
         });
